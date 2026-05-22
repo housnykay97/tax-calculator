@@ -1,14 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 </head>
+
 <body>
     <div>
-        <p>Tax Calculator</p>
+        <form id="tax_form">
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Basic Salary</label>
+                <input type="number" id="basic_salary" class="form-control" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Benefits</label>
+                <input type="number" id="benefits" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
-    <script src="tax.js"></script>
+
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Tax Category</th>
+                    <th scope="col">Tax Output</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr> 
+                    <td>Gross Salary</td>
+                    <td id="gross_sal"></td>
+                </tr>
+                <tr>
+                    
+                    <td>NHIF</td>
+                    <td id="nhif"></td>
+                </tr>
+                <tr>
+                    <td>NSSF</td>
+                    <td id="nssf"></td>
+                </tr>
+                <tr>
+                    <td>NHDF</td>
+                    <td id="nhdf"></td>
+                </tr>
+                <tr>
+                    <td>Taxable Income</td>
+                    <td id="taxable_income"></td>
+                </tr>
+                <tr>
+                    <td>PAYEE</td>
+                    <td id="paye"></td>
+                </tr>
+                <tr>
+                    <td>Net Salary</td>
+                    <td id="net_salary"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="form.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
