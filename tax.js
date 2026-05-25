@@ -1,174 +1,219 @@
 document.getElementById("tax_form").addEventListener('submit', function (event) {
     event.preventDefault();
 
-    let basic_salary = Number(document.getElementById("basic_salary").value)
-    let benefits = Number(document.getElementById("benefits").value)
+    let basic_salary = Number(document.getElementById("basic_salary").value) || 0;
+    let benefits = Number(document.getElementById("benefits").value) || 0;
 
+    let config_rate = Number(document.getElementById("tax_config_rate")?.value || 0.01);
+    let nssf_option = document.getElementById("nssf_rates").value;
+    let deduct_shif = document.getElementById("shif_deduction").checked;            //true or false
+    let deduct_housing = document.getElementById("levy").checked;
+    let salarytype = document.getElementById("salary_type").value;
+
+
+    // calculations
     function calculate_gross(basic, ben) {
-        return basic + ben
+        if (salarytype === 'basic') {
+            return basic + ben
+        } else {
+            return 0;
+        }
     }
 
     let gross = calculate_gross(basic_salary, benefits)
-    document.getElementById('gross_sal').innerHTML = gross
 
 
-    // NHIF function
-    function nhif_value(gross_salary) {                                 // the parameter name is just a label for whatever number passed in the function
-        let nhif = 0;                                                   // starts with zero to create the variable & give it a default value so it doesn't run -ve values
-        if (gross_salary <= 5999) {
-            nhif = 150;
-        } else if (gross_salary <= 7999) {
-            nhif = 300;
-        } else if (gross_salary <= 11999) {
-            nhif = 400;
-        } else if (gross_salary <= 14999) {
-            nhif = 500;
-        } else if (gross_salary <= 19999) {
-            nhif = 600;
-        } else if (gross_salary <= 24999) {
-            nhif = 750;
-        } else if (gross_salary <= 29999) {
-            nhif = 850;
-        } else if (gross_salary <= 34999) {
-            nhif = 900;
-        } else if (gross_salary <= 39999) {
-            nhif = 950;
-        } else if (gross_salary <= 44999) {
-            nhif = 1000;
-        } else if (gross_salary <= 49999) {
-            nhif = 1100;
-        } else if (gross_salary <= 59999) {
-            nhif = 1200;
-        } else if (gross_salary <= 69999) {
-            nhif = 1300;
-        } else if (gross_salary <= 79999) {
-            nhif = 1400;
-        } else if (gross_salary <= 89999) {
-            nhif = 1500;
-        } else if (gross_salary <= 99999) {
-            nhif = 1600;
-        } else {
-            nhif = 1700;
-        }
-        return nhif
+    // SHIF function 2.75% of the gross, min 300 KES
+    function shif_value(gross_salary) {
+        if (!deduct_shif) return 0;            //skip if unchecked or false, returns 0. No deduction                        
+        let shif = gross_salary * 0.0275;      //if checked, calculate 2.75% of gross salary
+        return shif < 300 ? 300 : shif;          //ternary operator if shif<300 deduction is 300 else the actual amount
     }
-    let nhif1 = nhif_value(gross)
-    document.getElementById("nhif").innerHTML = nhif1
+
+    let shif1 = shif_value(gross)
 
 
-
-    // NSSF function
+    // NSSF function 6% of gross salary, minimum base is 18000
     function nssf_value(gross_salary) {
         let nssf = 0;
-        if (gross_salary >= 18000) {
-            nssf = gross_salary * 0.06;
+        if (nssf_option === 'rate_six') {
+            let nssf_base = Math.max(gross_salary, 18000)
+            nssf = 0.06 * nssf_base
         }
-        return nssf;
+        return nssf
     }
 
     let nssf1 = nssf_value(gross)
-    document.getElementById("nssf").innerHTML = nssf1
 
 
-
-    //NHDF function (housing levy)
+    //NHDF function (housing levy) 1.5%
     function nhdf_value(gross_salary) {
-        let nhdf = gross_salary * 0.015
-        return nhdf
+        return deduct_housing ? gross_salary * 0.015 : 0;               // if dh is true, charge 1.5%. If false, charge 0.
     }
 
     let nhdf1 = nhdf_value(gross)
-    document.getElementById("nhdf").innerHTML = nhdf1
-
 
 
     // taxable income function
-    function taxable_income(gross_salary, nssf, nhdf, nhif) {
-        let tax_income = gross_salary - (nssf + nhdf + nhif);
-        return tax_income
+    function taxable_income(gross_salary, nssf, nhdf, shif) {
+        let tax_income = gross_salary - (nssf + nhdf + shif);
+        return tax_income < 0 ? 0 : tax_income
     }
 
-    let tax_inc = taxable_income(gross, nssf1, nhdf1, nhif1)
-    document.getElementById("taxable_income").innerHTML = tax_inc
+    let tax_inc = taxable_income(gross, nssf1, nhdf1, shif1)
 
 
-
-    //PAYEE function
-
-    function person_payee(taxable_income) {
-        let tax_paid = 0;
+    //PAYE function / Income tax calculation
+    function person_paye(taxable_income) {
+        let i_tax = 0;
 
         if (taxable_income <= 24000) {
-            tax_paid = taxable_income * 0.10;
+            i_tax = taxable_income * 0.10;
         }
         else if (taxable_income <= 32333) {
-            tax_paid = (24000 * 0.10) + ((taxable_income - 24000) * 0.25);
+            i_tax = (24000 * 0.10) + ((taxable_income - 24000) * 0.25);
         }
         else if (taxable_income <= 500000) {
-            tax_paid = (24000 * 0.10) + (8333 * 0.25) + ((taxable_income - 32333) * 0.30);
+            i_tax = (24000 * 0.10) + (8333 * 0.25) + ((taxable_income - 32333) * 0.30);
         }
         else if (taxable_income <= 800000) {
-            tax_paid = (24000 * 0.10) + (8333 * 0.25) + (467667 * 0.30) + ((taxable_income - 500000) * 0.325);
+            i_tax = (24000 * 0.10) + (8333 * 0.25) + (467667 * 0.30) + ((taxable_income - 500000) * 0.325);
         }
         else {
-            tax_paid = (24000 * 0.10) + (8333 * 0.25) + (467667 * 0.30) + (300000 * 0.325) + ((taxable_income - 800000) * 0.35);
+            i_tax = (24000 * 0.10) + (8333 * 0.25) + (467667 * 0.30) + (300000 * 0.325) + ((taxable_income - 800000) * 0.35);
         }
-
-        // Minus personal relief of 2,400 per month
-        let personal_relief = 2400;
-        let paye = tax_paid - personal_relief;
-
-        // if paye is negative
-        if (paye < 0) {
-            paye = 0;
-        }
-
-        return paye;
+        return i_tax
     }
 
-    let pay_ee = person_payee(tax_inc);
-    document.getElementById("paye").innerHTML = pay_ee
+    let income_tax = person_paye(tax_inc);
 
+
+    //Tax Reliefs
+    let personal_relief = 2400;
+    let shif_relief = shif1 * 0.15;                                     // 15% insurance relief on SHIF
+    let total_relief = Math.max(personal_relief + shif_relief, 0);      //picks the actual amount or 0..not -ves
+
+
+    //final paye after reliefs
+    let final_paye = Math.max(income_tax - total_relief, 0);
 
 
     //Net Salary function
+    function net_salary(gross_salary, shif, nhdf, nssf, payee) {
+        return gross_salary - (shif + nhdf + nssf + payee);
 
-    function net_salary(gross_salary, nhif, nhdf, nssf, payee) {
-        let net = gross_salary - (nhif + nhdf + nssf + payee);
-        return net
     }
 
-    let net_sal = net_salary(gross, nhif1, nhdf1, nssf1, pay_ee)
-    document.getElementById("net_salary").innerHTML = net_sal
+    let net_sal = net_salary(gross, shif1, nhdf1, nssf1, final_paye)
 
 
-})
+    //Rounding off
+    function format_amount(amount, rate) {
+        rate = Number(rate);
+        if (rate === 1) {
+            return Math.round(amount);                                                  // Rounds to the nearest whole shilling
+        } else if (rate === 0.50) {
+            return (Math.round(amount * 2) / 2).toFixed(2);                             // Rounds to nearest 50 cents
+        } else if (rate === 0.10) {
+            return (Math.round(amount * 10) / 10).toFixed(2);                           // Rounds to nearest 10 cents
+        } else {
+            return amount.toFixed(2);                                                   // Keeps exact cents (.01)
+        }
+    }
 
-// *Form input*
-// -> Improve user input methodology through a form
-// -> take user input through a form
-// -> user fills a form and submits it
-// -> on submission, JS is invoked and performs tax computations
-// -> JS also outputs the results in a html table
+    // Output
+    document.getElementById('gross_sal').innerText = format_amount(gross, config_rate);
+    document.getElementById("shif").innerText = format_amount(shif1, config_rate);
+    document.getElementById("nssf").innerText = format_amount(nssf1, config_rate);
+    document.getElementById("nhdf").innerText = format_amount(nhdf1, config_rate);
+    document.getElementById("taxable_income").innerText = format_amount(tax_inc, config_rate);
+
+    document.getElementById("res-income-tax").innerText = format_amount(income_tax, config_rate);
+    document.getElementById("res-relief").innerText = format_amount(total_relief, config_rate);
+    document.getElementById("paye").innerText = format_amount(final_paye, config_rate);
+    document.getElementById("net_salary").innerText = "KES" + format_amount (net_sal, config_rate);
+    document.getElementById("results").style.display = "block";
+    document.getElementById("download_row").style.display = "table-row";
+});
+
+document.getElementById("download_pdf").addEventListener("click", function () {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const getText = id => document.getElementById(id).innerText;
+
+    // Brand color: #4CAF50
+    const green = [76, 175, 80];
+    
+    // Header bar
+    doc.setFillColor(...green);
+    doc.rect(0, 0, 210, 30, 'F');
+    
+    // Title in white
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(20);
+    doc.text("SMARTPAY", 14, 20);
+    doc.setFontSize(12);
+    doc.text("PAYE Breakdown", 14, 26);
+
+    // Reset text color
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(10);
+    doc.text(`Generated: ${new Date().toLocaleDateString()}`, 150, 20);
+
+    // Table
+    const data = [
+        ["Gross Salary", getText("gross_sal")],
+        ["SHIF (Health Insurance)", getText("shif")],
+        ["NSSF", getText("nssf")],
+        ["NHDF (Housing Levy)", getText("nhdf")],
+        ["Taxable Income", getText("taxable_income")],
+        ["Income Tax", getText("res-income-tax")],
+        ["Total Relief", getText("res-relief")],
+        ["PAYE Payable", getText("paye")],
+        ["Net Salary", getText("net_salary")]
+    ];
+
+    let y = 45;
+    doc.setFontSize(11);
+    
+    // Table header
+    doc.setFillColor(240, 240, 240);
+    doc.rect(14, y - 7, 182, 9, 'F');
+    doc.setFont(undefined, 'bold');
+    doc.text("Item", 16, y);
+    doc.text("Amount (KES)", 130, y);
+    doc.setFont(undefined, 'normal');
+    y += 10;
+
+    // Table rows
+    data.forEach((row, i) => {
+        if (i % 2 === 0) {
+            doc.setFillColor(250, 250, 250);
+            doc.rect(14, y - 6, 182, 9, 'F');
+        }
+        doc.text(row[0], 16, y);
+        doc.text(row[1], 130, y);
+        y += 10;
+    });
+
+    // Highlight net salary
+    doc.setDrawColor(...green);
+    doc.setLineWidth(0.5);
+    doc.line(14, y + 2, 196, y + 2);
+    doc.setFont(undefined, 'bold');
+    doc.setTextColor(...green);
+    doc.text("Net Salary", 16, y + 10);
+    doc.text(getText("net_salary"), 130, y + 10);
+
+    // Footer
+    doc.setFont(undefined, 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(100, 100, 100);
+    doc.text("Calculations based on Kenya Finance Act 2024/2025. For guidance only.", 14, y + 25);
+
+    doc.save(`SMARTPAY_PAYE_${new Date().toISOString().slice(0,10)}.pdf`);
+});
 
 
-// id attribute -> unique identifier for an element to be targeted by JS
-// document.getElementID() -> used by JS to access/target a html element by its unique id
 
-// document.getElementID().value - used when targeting form elements
-// document.getElementID().innerHTML - used when targeting other elements
-// document.getElementID().innerText - used when targeting other elements
-
-
-// JS functions
-// 1.Reactivity
-// 1.User Interactivity - the ability of a user to interact with an application
-//     -> anything a user is able to do when using an application(event) e.g scroll, type, submit, toggle
-
-// addEventListener() - a function that waits for an event to occur so that JS is invoked
-// event.preventDefault() - a function that prevents the default behaviour of the browser after an event has occurred i.e refreshing
-
-// Task
-// Complete the rest of the tax project using form input and output all results in the tax table Style the application to reflect modern 
-// tax calculators Lean towards Kenyan-based tax calculators Add some more features to your application or even an extra html with
-//  possible features like paye categories , nhif / sha info , nhdf info , and even a possible link to itax or ecitizen
