@@ -19,29 +19,32 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-white fixed-top">
+    <nav class="navbar navbar-expand-lg bg-primary-subtle fixed-top">
         <div class="container">
-            <div class="justify-content-start">
-                <a class="navbar-brand fw-bold fs-1"
-                    style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; color:#28365f;"
-                    href="#">SMART<span class="fs-2 text-black">PAY</span></a>
 
-            </div>
+            <a class="navbar-brand fw-bold fs-1"
+                style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; color:#28365f;"
+                href="#">SMART<span class="fs-2 text-black">PAY</span></a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"><span class="navbar-toggler-icon"></span>
+            </button>
+
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                <ul class="navbar-nav mb-5 mb-lg-0 fw-bold">
-                     <li>
+                <ul class="navbar-nav mb-lg-0 fw-bold">
+                    <li class="nav-item">
                         <a class="nav-link" href="#">Home</a>
                     </li>
-                    <li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#about">About</a>
                     </li>
-                    <li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#contacts">Contact Us</a>
                     </li>
-                    <li>
+                    <li class="nav-item">
                         <a class="nav-link" href="https://itax.kra.go.ke/KRA-Portal/">iTax</a>
                     </li>
-                    <li>
+                    <li class="nav-item">
                         <a class="nav-link" href="https://accounts.ecitizen.go.ke/en/login">eCitizen</a>
                     </li>
                 </ul>
@@ -50,9 +53,9 @@
     </nav>
 
     <!-- Main Card Container -->
-    <div class="container">
+    <div class="container" style="margin-top: 105px;">
         <div class="card">
-            <div class="row g-5">
+            <div class="row g-5 justify-content-center">
 
                 <!-- TOP CARD -->
                 <div class="col-md-6">
@@ -101,7 +104,7 @@
                         <div class="form-check mb-2">
                             <input class="form-check-input" type="checkbox" id="shif_deduction" checked>
                             <label class="form-check-label text-muted-custom" for="shif_deduction">
-                                Deduct SHIF
+                                Deduct SHA
                             </label>
                         </div>
 
@@ -129,7 +132,7 @@
                 </div>
                 <div class="col-md-6">
                     <h3 class="text-info">Easy steps to Digital Tax Experience</h3>
-                    <div class="container text-white" style="margin-top: 80px;">
+                    <div class="container text-white" style="margin-top: 65px;">
                         <p>In Kenya, workers in formal employment are taxed through Pay As You Earn (PAYE).</p>
 
                         <p>The formula for determining PAYE is based on Kenyan Tax Laws (Individual tax calculation).
@@ -138,8 +141,13 @@
                         <p>For <span class="fw-semibold">BASIC PAY CALCULATOR</span>, use "Salary Type" options
                             in form
                             dropdowns.</p>
+                        <p>As an employee, your employer will deduct this tax and remit it to KRA on your behalf through
+                            <span class="text-danger"> <a class="text-decoration-none text-danger"
+                                    href="https://itax.kra.go.ke/KRA-Portal/" target="_blank"> KRA Online
+                                    Portal.</a></span>
+                        </p>
                     </div>
-                    <div class="container text-info mt-5 pt-2">
+                    <div class="container text-info mt-5">
                         <h3 class="text-white">PAYE Calculator (Based on New Tax Bands)</h3>
                         <table class="tax-table">
                             <thead>
@@ -170,14 +178,17 @@
                                     <td>35%</td>
                                 </tr>
                                 <tr>
-                                    <td class="meta-info" colspan="2">Personal Relief: KES 2,400.00 per month</td>
+                                    <td class="text-info" colspan="5">Personal Relief: KES 2,400.00 per month</td>
                                 </tr>
                                 <tr>
-                                    <td class="meta-info" colspan="2">Minimum Taxable Income: KES 24,001.00 per month
+                                    <td class="text-info" colspan="5">Minimum Taxable Income: KES 24,001.00 per month
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="mt-5 pt-1 text-white">
+
                     </div>
                 </div>
             </div>
@@ -198,7 +209,7 @@
                     <td class="value-col neutral-val" id="gross_sal">0.00</td>
                 </tr>
                 <tr>
-                    <td class="label-col">SHIF (Health):</td>
+                    <td class="label-col">SHA (Health):</td>
                     <td class="value-col" id="shif">0.00</td>
                 </tr>
                 <tr>
@@ -246,11 +257,11 @@
         <h2 class="mb-2" style="color:#1e3a8a;">Other Deductions</h2>
         <ul class="">
             <li><strong>NSSF:</strong> 6% of gross salary, min base KES 18,000. Follows NSSF Act schedule.</li>
-            <li><strong>SHIF:</strong> 2.75% of gross salary, minimum KES 300. Replaces NHIF from Oct 2024.</li>
+            <li><strong>SHA:</strong> 2.75% of gross salary, minimum KES 300. Replaces NHIF from Oct 2024.</li>
             <li><strong>Housing Levy:</strong> 1.5% of gross salary when selected.</li>
         </ul>
         <p class="text-secondary">
-            Note: SHIF and Housing Levy are deductible before tax from Dec 2024.
+            Note: SHA (Health) and Housing Levy are deductible before tax from Dec 2024.
             Insurance relief of 15% applies to SHIF.
             Estimates follow Finance Act 2024/2025. For official filing use KRA iTax.
         </p>
@@ -259,7 +270,7 @@
         <h2 class="mb-2" style="color:#1e3a8a;">How it works</h2>
         <ol>
             <li>Enter monthly basic salary and benefits</li>
-            <li>Select salary type, NSSF rate, and toggle SHIF/Housing Levy.</li>
+            <li>Select salary type, NSSF rate, and toggle SHA/Housing Levy.</li>
             <li>Choose round-off precision and click "Calculate Breakdown".</li>
             <li>View detailed breakdown and download as PDF.</li>
         </ol>

@@ -1,153 +1,172 @@
-        body {
-            background: rgb(241, 244, 245);
-            background-size: cover;
-            min-height: 100vh;                     
-            padding: 80px 40px 40px 40px;
-        }
+ .card {
+     background-color: #28365f;
+     border: 1px solid rgba(255, 255, 255, 0.08);
+     border-radius: 16px;
+     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+     width: 100%;
+     max-width: 1050px;
+     padding: 40px;
+     margin: 0 auto;
+ }
 
-        .card {
-            background-color: #28365f;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            width: 100%;
-            max-width: 1050px;
-            padding: 40px;
-        }
+ .text-muted-custom {
+     color: #94a3b8;
+     font-size: 0.9rem;
+ }
 
-        .text-muted-custom {
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
+ .section-title {
+     font-size: 2rem;
+     font-weight: 600;
+     letter-spacing: -0.2px;
+     color: white;
+ }
 
-        .section-title {
-            font-size: 2rem;
-            font-weight: 600;
-            letter-spacing: -0.2px;
-            color: white;
-        }
+ .form-label {
+     color: #bac2cc;
+     font-size: 0.85rem;
+     font-weight: 500;
+     margin-bottom: 6px;
+ }
 
-        .form-label {
-            color: #bac2cc;
-            font-size: 0.85rem;
-            font-weight: 500;
-            margin-bottom: 6px;
-        }
+ .form-control,
+ .form-select {
+     background-color: #ffffff;
+     border: 1px solid #2e3a59;
+     color: #161d30;
+     padding: 12px 16px;
+     border-radius: 8px;
+ }
 
-        .form-control,
-        .form-select {
-            background-color: #ffffff;
-            border: 1px solid #2e3a59;
-            color: #161d30;
-            padding: 12px 16px;
-            border-radius: 8px;
-        }
+ .form-control:focus,
+ .form-select:focus {
+     background-color: #161d30;
+     border-color: #3b82f6;
+     color: #ffffff;
+     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+ }
 
-        .form-control:focus,
-        .form-select:focus {
-            background-color: #161d30;
-            border-color: #3b82f6;
-            color: #ffffff;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-        }
+ .form-control.payroll {
+     background-color: #728ed5;
+     border-color: #222d47;
+     color: white;
+ }
 
-        .form-control.payroll {
-            background-color: #728ed5;
-            border-color: #222d47;
-            color: white;
-        }
+ /* Action buttons */
+ .btn-action-primary {
+     background-color: #14b8a6;
+     color: #0f172a;
+     font-weight: 600;
+     padding: 12px 24px;
+     border-radius: 8px;
+     border: none;
+     transition: all 0.2s ease;
+ }
 
-        /* Action buttons */
-        .btn-action-primary {
-            background-color: #14b8a6;
-            color: #0f172a;
-            font-weight: 600;
-            padding: 12px 24px;
-            border-radius: 8px;
-            border: none;
-            transition: all 0.2s ease;
-        }
+ .btn-action-primary:hover {
+     background-color: #0d9488;
+     color: #ffffff;
+ }
 
-        .btn-action-primary:hover {
-            background-color: #0d9488;
-            color: #ffffff;
-        }
+ /* Form check input */
+ .form-check-input {
+     background-color: #161d30;
+     border: 1px solid #2e3a59;
+ }
 
-        /* Form check input */
-        .form-check-input {
-            background-color: #161d30;
-            border: 1px solid #2e3a59;
-        }
-
-        .form-check-input:checked {
-            background-color: #3b82f6;
-            border-color: #3b82f6;
-        }
+ .form-check-input:checked {
+     background-color: #3b82f6;
+     border-color: #3b82f6;
+ }
 
 
 
-        /* Panel Container..the second card */
-        .panel-results {
-            background-color: #e3f2fd;
-            border-radius: 6px;
-            padding: 20px 25px;
-            font-family: Arial, sans-serif;
-            max-width: 400px;
-            margin: 0 auto;
-        }
+ /* Panel Container..the second card */
+ .panel-results {
+     background-color: #e3f2fd;
+     border-radius: 6px;
+     padding: 20px 25px;
+     font-family: Arial, sans-serif;
+     max-width: 400px;
+     margin: 0 auto;
+ }
 
-        /* Grid */
-        .table-custom {
-            width: 100%;
-            border-collapse: collapse;
-        }
+ /* Grid */
+ .table-custom {
+     width: 100%;
+     border-collapse: collapse;
+ }
 
-        .table-custom td {
-            padding: 5px 0;
-            font-size: 1.0rem;
-        }
+ .table-custom td {
+     padding: 5px 0;
+     font-size: 1.0rem;
+ }
 
-        /* Left side columns*/
-        .table-custom td.label-col {
-            width: 50%;
-            text-align: right;
-            padding-right: 20px;
-            color: #455a64;
-            font-weight: bold;
-            font-size: 0.8rem;
-            letter-spacing: 0.3px;
-        }
+ /* Left side columns*/
+ .table-custom td.label-col {
+     width: 50%;
+     text-align: right;
+     padding-right: 20px;
+     color: #455a64;
+     font-weight: bold;
+     font-size: 0.8rem;
+     letter-spacing: 0.3px;
+ }
 
-        /* Right side columns (Values) */
-        .table-custom td.value-col {
-            width: 50%;
-            text-align: right;
-            font-weight: bold;
-            color: #1e3a8a;
-            /* Darker navy blue value tracking */
-        }
+ /* Right side columns (Values) */
+ .table-custom td.value-col {
+     width: 50%;
+     text-align: right;
+     font-weight: bold;
+     color: #1e3a8a;
+     /* Darker navy blue value tracking */
+ }
 
-        /* Exceptional formatting variations */
-        .table-custom td.neutral-val {
-            color: #334155;
-            font-weight: normal;
-        }
+ /* Exceptional formatting variations */
+ .table-custom td.neutral-val {
+     color: #334155;
+     font-weight: normal;
+ }
 
-        .table-custom td.muted-val {
-            color: #2e538f;
-            font-weight: normal;
-        }
+ .table-custom td.muted-val {
+     color: #2e538f;
+     font-weight: normal;
+ }
 
-        /* Row Dividers */
-        .row-divider-thin td {
-            border-top: 1px solid #cbd5e1;
-            padding-top: 8px;
-            margin-top: 4px;
-        }
+ /* Row Dividers */
+ .row-divider-thin td {
+     border-top: 1px solid #cbd5e1;
+     padding-top: 8px;
+     margin-top: 4px;
+ }
 
-        /* Highlight blue for Net Pay */
-        .highlight-blue {
-            color: #1d4ed8 !important;
-            font-weight: 800;
-        }
-          
+ /* Highlight blue for Net Pay */
+ .highlight-blue {
+     color: #1d4ed8 !important;
+     font-weight: 800;
+ }
+
+ /* Tax-table */
+ .tax-table {
+     width: 100%;
+     border-collapse: collapse;
+     color: #0dcaf0;
+ }
+
+ .tax-table th,
+ .tax-table td {
+     border: 1px solid rgba(255, 255, 255, 0.2);
+     padding: 8px 14px;
+     text-align: left;
+ }
+
+ .tax-table th {
+     font-weight: 600;
+     color: #0dcaf0;
+ }
+
+ .tax-table tbody tr:nth-child(6) td,
+ .tax-table tbody tr:nth-child(7) td {
+     border-top: 1px solid rgba(255, 255, 255, 0.2);
+     color: #0dcaf0;
+     font-size: 0.9rem;
+ }
