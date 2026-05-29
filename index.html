@@ -42,10 +42,10 @@
                         <a class="nav-link" href="#contacts">Contact Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="https://itax.kra.go.ke/KRA-Portal/">iTax</a>
+                        <a class="nav-link" href="https://itax.kra.go.ke/KRA-Portal/" target="_blank">iTax</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="https://accounts.ecitizen.go.ke/en/login">eCitizen</a>
+                        <a class="nav-link" href="https://accounts.ecitizen.go.ke/en/login" target="_blank">eCitizen</a>
                     </li>
                 </ul>
             </div>
@@ -85,51 +85,73 @@
                                 onblur="if(this.value) this.value = parseFloat(this.value).toFixed(2)">
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Salary Type</label>
-                            <select class="form-select" id="salary_type">
-                                <option value="basic" selected>Basic Pay</option>
-                                <option value="net" disabled>Net Pay</option>
-                            </select>
+
+                        <!-- HIDDEN CARD -->
+                        <div class="container d-flex flex-column justify-content-between">
+
+                            <div id="results" class="panel-results" style="display: none;">
+                                <h2 class="h5">PAYE Breakdown Results</h2>
+                                <p class="text-muted-custom mb-4">Calculations compiled relative to active local tax
+                                    legislation
+                                    structures.</p>
+
+                                <table class="table-custom">
+                                    <tr class="row-divider-thin">
+                                        <td class="label-col">Gross Salary:</td>
+                                        <td class="value-col neutral-val" id="gross_sal">0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-col">SHA (Health):</td>
+                                        <td class="value-col" id="shif">0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-col">NSSF:</td>
+                                        <td class="value-col" id="nssf">0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-col"
+                                            style="text-transform:none; font-size:0.9rem; font-weight:normal;">
+                                            NHDF (Housing Levy):
+                                        </td>
+                                        <td class="value-col" id="nhdf">0.00</td>
+                                    </tr>
+                                    <tr class="row-divider-thin">
+                                        <td class="label-col">Taxable Income:</td>
+                                        <td class="value-col" id="taxable_income">0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-col">Income Tax:</td>
+                                        <td class="value-col neutral-val" id="res-income-tax">0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-col"
+                                            style="text-transform:none; font-size:0.9rem; font-weight:normal;">
+                                            Total Relief:
+                                        </td>
+                                        <td class="value-col muted-val" id="res-relief">0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-col">PAYE (After Reliefs):</td>
+                                        <td class="value-col" id="paye">0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-col">Net Salary:</td>
+                                        <td class="value-col highlight-blue" id="net_salary">0.00</td>
+                                    </tr>
+                                    <tr id="download_row" style="display: none;">
+                                        <td colspan="2" class="text-center">
+                                            <button type="button" id="download_pdf"
+                                                class="btn btn-primary btn-sm">Download
+                                                PDF</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Select NSSF Rates</label>
-                            <select class="form-select" id="nssf_rates">
-                                <option value="rate_six" selected>NSSF - 6% of Gross (Min 18,000)</option>
-                                <option value="none">None</option>
-                            </select>
-                        </div>
-
-                        <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" id="shif_deduction" checked>
-                            <label class="form-check-label text-muted-custom" for="shif_deduction">
-                                Deduct SHA
-                            </label>
-                        </div>
-
-                        <div class="form-check mb-4">
-                            <input class="form-check-input" type="checkbox" id="levy" checked>
-                            <label class="form-check-label text-muted-custom" for="levy">
-                                Deduct Housing Levy
-                            </label>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Tax Configuration Rate</label>
-                            <select id="tax_config_rate" class="form-select">
-                                <option value="0.01" disabled hidden selected>Select Round Off</option>
-                                <option value="0.01">0.01</option>
-                                <option value="0.10">0.10</option>
-                                <option value="0.50">0.50</option>
-                                <option value="1">1</option>
-                            </select>
-                        </div>
-
-                        <button type="submit" class="btn-action-primary w-100">Calculate Breakdown</button>
-
+                        <button type="submit" class="btn-action-primary w-100 pt-2">Calculate Breakdown</button>
                     </form>
                 </div>
+
                 <div class="col-md-6">
                     <h3 class="text-info">Easy steps to Digital Tax Experience</h3>
                     <div class="container text-white" style="margin-top: 65px;">
@@ -138,15 +160,15 @@
                         <p>The formula for determining PAYE is based on Kenyan Tax Laws (Individual tax calculation).
                         </p>
 
-                        <p>For <span class="fw-semibold">BASIC PAY CALCULATOR</span>, use "Salary Type" options
-                            in form
-                            dropdowns.</p>
+                        <p>For <span class="fw-semibold">BASIC PAY CALCULATOR</span>, use the "Monthly Salary" and
+                            "Benefits" inputs in the form.</p>
                         <p>As an employee, your employer will deduct this tax and remit it to KRA on your behalf through
                             <span class="text-danger"> <a class="text-decoration-none text-danger"
                                     href="https://itax.kra.go.ke/KRA-Portal/" target="_blank"> KRA Online
                                     Portal.</a></span>
                         </p>
                     </div>
+
                     <div class="container text-info mt-5">
                         <h3 class="text-white">PAYE Calculator (Based on New Tax Bands)</h3>
                         <table class="tax-table">
@@ -187,72 +209,12 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="mt-5 pt-1 text-white">
-
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- BOTTOM CARD -->
-    <div class="container d-flex flex-column justify-content-between">
 
-        <div id="results" class="panel-results" style="display: none;">
-            <h2 class="h5 mb-2">PAYE Breakdown Results</h2>
-            <p class="text-muted-custom mb-4">Calculations compiled relative to active local tax legislation
-                structures.</p>
-
-            <table class="table-custom">
-                <tr class="row-divider-thin">
-                    <td class="label-col">Gross Salary:</td>
-                    <td class="value-col neutral-val" id="gross_sal">0.00</td>
-                </tr>
-                <tr>
-                    <td class="label-col">SHA (Health):</td>
-                    <td class="value-col" id="shif">0.00</td>
-                </tr>
-                <tr>
-                    <td class="label-col">NSSF:</td>
-                    <td class="value-col" id="nssf">0.00</td>
-                </tr>
-                <tr>
-                    <td class="label-col" style="text-transform:none; font-size:0.9rem; font-weight:normal;">
-                        NHDF (Housing Levy):
-                    </td>
-                    <td class="value-col" id="nhdf">0.00</td>
-                </tr>
-                <tr class="row-divider-thin">
-                    <td class="label-col">Taxable Income:</td>
-                    <td class="value-col" id="taxable_income">0.00</td>
-                </tr>
-                <tr>
-                    <td class="label-col">Income Tax:</td>
-                    <td class="value-col neutral-val" id="res-income-tax">0.00</td>
-                </tr>
-                <tr>
-                    <td class="label-col" style="text-transform:none; font-size:0.9rem; font-weight:normal;">
-                        Total Relief:
-                    </td>
-                    <td class="value-col muted-val" id="res-relief">0.00</td>
-                </tr>
-                <tr>
-                    <td class="label-col">PAYE (After Reliefs):</td>
-                    <td class="value-col" id="paye">0.00</td>
-                </tr>
-                <tr>
-                    <td class="label-col">Net Salary:</td>
-                    <td class="value-col highlight-blue" id="net_salary">0.00</td>
-                </tr>
-                <tr id="download_row" style="display: none;">
-                    <td colspan="2" class="text-center pt-3">
-                        <button type="button" id="download_pdf" class="btn btn-secondary btn-sm">Download
-                            PDF</button>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
     <div class="container mt-4 pt-3" id="about">
         <h2 class="mb-2" style="color:#1e3a8a;">Other Deductions</h2>
         <ul class="">

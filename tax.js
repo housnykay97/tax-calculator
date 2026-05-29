@@ -5,19 +5,11 @@ document.getElementById("tax_form").addEventListener('submit', function (event) 
     let benefits = Number(document.getElementById("benefits").value) || 0;
 
     let config_rate = Number(document.getElementById("tax_config_rate")?.value || 0.01);
-    let nssf_option = document.getElementById("nssf_rates").value;
-    let deduct_shif = document.getElementById("shif_deduction").checked;            //true or false
-    let deduct_housing = document.getElementById("levy").checked;
-    let salarytype = document.getElementById("salary_type").value;
 
 
     // calculations
     function calculate_gross(basic, ben) {
-        if (salarytype === 'basic') {
-            return basic + ben
-        } else {
-            return 0;
-        }
+        return basic + ben
     }
 
     let gross = calculate_gross(basic_salary, benefits)
@@ -25,9 +17,8 @@ document.getElementById("tax_form").addEventListener('submit', function (event) 
 
     // SHIF function 2.75% of the gross, min 300 KES
     function shif_value(gross_salary) {
-        if (!deduct_shif) return 0;            //skip if unchecked or false, returns 0. No deduction                        
-        let shif = gross_salary * 0.0275;      //if checked, calculate 2.75% of gross salary
-        return shif < 300 ? 300 : shif;          //ternary operator if shif<300 deduction is 300 else the actual amount
+        let shif = gross_salary * 0.0275;
+        return shif < 300 ? 300 : shif;
     }
 
     let shif1 = shif_value(gross)
@@ -36,10 +27,8 @@ document.getElementById("tax_form").addEventListener('submit', function (event) 
     // NSSF function 6% of gross salary, minimum base is 18000
     function nssf_value(gross_salary) {
         let nssf = 0;
-        if (nssf_option === 'rate_six') {
-            let nssf_base = Math.max(gross_salary, 18000)
-            nssf = 0.06 * nssf_base
-        }
+        let nssf_base = Math.max(gross_salary, 18000)
+        nssf = 0.06 * nssf_base
         return nssf
     }
 
@@ -48,7 +37,7 @@ document.getElementById("tax_form").addEventListener('submit', function (event) 
 
     //NHDF function (housing levy) 1.5%
     function nhdf_value(gross_salary) {
-        return deduct_housing ? gross_salary * 0.015 : 0;               // if dh is true, charge 1.5%. If false, charge 0.
+        return gross_salary * 0.015
     }
 
     let nhdf1 = nhdf_value(gross)
@@ -131,10 +120,11 @@ document.getElementById("tax_form").addEventListener('submit', function (event) 
     document.getElementById("res-income-tax").innerText = format_amount(income_tax, config_rate);
     document.getElementById("res-relief").innerText = format_amount(total_relief, config_rate);
     document.getElementById("paye").innerText = format_amount(final_paye, config_rate);
-    document.getElementById("net_salary").innerText = "KES" + format_amount (net_sal, config_rate);
+    document.getElementById("net_salary").innerText = "KES" + format_amount(net_sal, config_rate);
     document.getElementById("results").style.display = "block";
     document.getElementById("download_row").style.display = "table-row";
 });
+
 
 document.getElementById("download_pdf").addEventListener("click", function () {
     const { jsPDF } = window.jspdf;
@@ -144,11 +134,11 @@ document.getElementById("download_pdf").addEventListener("click", function () {
 
     // Brand color: #4CAF50
     const green = [76, 175, 80];
-    
+
     // Header bar
     doc.setFillColor(...green);
     doc.rect(0, 0, 210, 30, 'F');
-    
+
     // Title in white
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(20);
@@ -176,7 +166,7 @@ document.getElementById("download_pdf").addEventListener("click", function () {
 
     let y = 45;
     doc.setFontSize(11);
-    
+
     // Table header
     doc.setFillColor(240, 240, 240);
     doc.rect(14, y - 7, 182, 9, 'F');
@@ -212,7 +202,7 @@ document.getElementById("download_pdf").addEventListener("click", function () {
     doc.setTextColor(100, 100, 100);
     doc.text("Calculations based on Kenya Finance Act 2024/2025. For guidance only.", 14, y + 25);
 
-    doc.save(`SMARTPAY_PAYE_${new Date().toISOString().slice(0,10)}.pdf`);
+    doc.save(`SMARTPAY_PAYE_${new Date().toISOString().slice(0, 10)}.pdf`);
 });
 
 
